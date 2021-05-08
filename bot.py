@@ -97,6 +97,7 @@ def get_weather_now(local_id):
     bot.send_message(local_id, weather_for_week)
 
 
+# ok
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     m = "Привет, я начал  отслеживание погоды, чтобы остановить меня напиши /stop, для большей информации обо мне напиши /help"
@@ -106,12 +107,14 @@ def send_welcome(message):
     thread1.run()
 
 
+# ok
 @bot.message_handler(commands=['help'])
 def send_help(message):
     m = "Я могу говорить погоду с помощью команды /weather.\n Вы в любой момент можете сменить время в которое присылается погода, по умолчанию это " + default_time + ".\n Еще Вы можете сменить город, для которого будет показываться погода, командой /setcity, сейчас это " + city_name + "\nдля остановки бота введите /stop"
     bot.send_message(message.chat.id, m)
 
 
+# ok
 @bot.message_handler(commands=['settime'])
 def set_time(message):
     schedule.clear('alarms')
@@ -119,6 +122,7 @@ def set_time(message):
     bot.register_next_step_handler(m, set_time)
 
 
+# ok
 def set_time(message):
     try:
         time.strptime(message.text, '%H:%M')
@@ -129,17 +133,20 @@ def set_time(message):
         bot.send_message(message.chat.id, "Wrong format, try again")
 
 
+# ok
 @bot.message_handler(commands=['time'])
-def send_help(message):
+def send_time(message):
     bot.send_message(message.chat.id, time.strftime('%d/%m/%Y %H:%M:%S'))
 
 
+# ok
 @bot.message_handler(commands=['setcity'])
-def send_help(message):
+def send_city(message):
     m = bot.send_message(message.chat.id, "Введите желаемый город на Английском")
     bot.register_next_step_handler(m, set_city)
 
 
+# ok
 def set_city(message):
     global city_name
     city_name = message.text + " (RU)"
@@ -150,6 +157,7 @@ def get_weather(message):
     get_weather_now(message.chat.id)
 
 
+# ok
 @bot.message_handler(commands=['stop'])
 def stop(message):
     schedule.clear('alarms')
